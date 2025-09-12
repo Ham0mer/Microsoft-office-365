@@ -1,9 +1,9 @@
 const express = require('express');
-const router = express.Router();
-const path = require('path');
+
 const config = require('../core/config');
 const utils = require('../core/utils');
 const microsoftGraph = require('../core/microsoftGraph');
+const router = express.Router();
 
 // 邮箱格式验证中间件
 const validateEmail = (req, res, next) => {
