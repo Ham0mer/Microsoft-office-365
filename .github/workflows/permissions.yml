@@ -1,0 +1,12 @@
+# 这个文件定义了GitHub Actions的权限
+# 用于确保工作流有足够的权限访问GitHub Container Registry
+
+name: Set Workflow Permissions
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+  packages: write
+  metadata: read

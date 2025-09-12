@@ -1,0 +1,72 @@
+# 依赖目录
+node_modules
+npm-debug.log*
+
+# 环境文件
+.env
+env
+*.env
+
+# 日志文件
+logs
+*.log
+
+# 运行时数据
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# 覆盖率目录
+coverage
+.nyc_output
+
+# 依赖目录
+.npm
+.eslintcache
+
+# 可选npm缓存目录
+.npm
+
+# 可选REPL历史
+.node_repl_history
+
+# 输出目录
+dist
+build
+
+# 临时文件
+.tmp
+.temp
+
+# IDE文件
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS文件
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+
+# GitHub
+.github
+
+# 文档
+README.md
+*.md
+
+# 测试文件
+test
+tests
+__tests__
+*.test.js
+*.spec.js

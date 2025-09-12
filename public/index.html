@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="garden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企业微信通知服务</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.5.0/dist/full.css" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+        }
+        body {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bef264 100%);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-2xl glass-card p-8 my-8">
+        <header class="mb-8">
+            <div class="flex items-center justify-between">
+                <h1 class="text-3xl font-bold text-primary flex items-center gap-2">
+                    <i data-lucide="mail" class="h-8 w-8"></i>
+                    Microsoft 365 邮箱订阅查询
+                </h1>
+                <button id="serviceStatusBtn" class="btn btn-sm btn-outline btn-primary gap-1">
+                    <i data-lucide="activity" class="h-4 w-4"></i>
+                    服务状态
+                </button>
+            </div>
+            <div class="mt-2">
+                <p class="text-base-content/70">查询Microsoft 365邮箱账户状态和订阅信息</p>
+            </div>
+        </header>
+
+        <!-- 邮箱信息查询 -->
+        <div id="step1-container">
+            <div class="divider">邮箱信息查询</div>
+            <div class="alert alert-warning mb-4">
+                <i data-lucide="alert-triangle" class="h-5 w-5"></i>
+                <div>
+                    <div class="font-medium">重要提示</div>
+                    <div class="text-sm">查询Microsoft 365账户状态、基本信息和订阅详情</div>
+                </div>
+            </div>
+
+            <form id="emailForm" class="space-y-4">
+                <div class="form-control">
+                    <label class="label font-medium">邮箱地址</label>
+                    <input type="email" name="email" class="input input-bordered w-full" required placeholder="请输入要查询的邮箱地址">
+                </div>
+
+                <button type="submit" class="btn btn-primary w-full flex gap-2 items-center">
+                    <i data-lucide="search" class="w-5 h-5"></i> 查询邮箱信息
+                </button>
+            </form>
+
+            <div id="emailResult" class="hidden mt-4"></div>
+        </div>
+
+        <!-- 租户SKU查询 & 全局OneDrive查询 -->
+        <div class="divider">租户SKU查询 & 全局OneDrive查询</div>
+        <div id="lookup-section">
+            <div class="form-control mb-4">
+                <label class="label font-medium">管理员Token</label>
+                <input type="password" id="adminToken" class="input input-bordered w-full" required placeholder="请输入管理员Token">
+                <div class="label">
+                    <span class="label-text-alt text-base-content/60">需要管理员权限的访问令牌</span>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <form id="skuForm" class="space-y-4">
+                    <div class="form-control">
+                        <label class="label font-medium">查询租户订阅SKU信息</label>
+                        <div class="flex gap-2">
+                            <button type="submit" class="btn btn-primary w-full">
+                                <i data-lucide="database" class="h-5 w-5"></i>
+                                查询租户SKU
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <form id="globalOnedriveForm" class="space-y-4">
+                    <div class="form-control">
+                        <label class="label font-medium">查询全局OneDrive使用情况</label>
+                        <div class="flex gap-2">
+                            <button type="submit" class="btn btn-secondary w-full">
+                                <i data-lucide="users" class="h-5 w-5"></i>
+                                查询全局OneDrive
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="skuResult" class="mt-4"></div>
+            <div id="globalOnedriveResult" class="mt-4"></div>
+        </div>
+    </div>
+
+    <!-- 提示弹窗 -->
+    <div id="save-alert" class="toast toast-top toast-center hidden">
+        <div class="alert alert-warning">
+            <i data-lucide="alert-triangle" class="h-6 w-6"></i>
+            <span>请注意：Code生成后，您只有一次机会保存！</span>
+        </div>
+    </div>
+
+    <!-- 服务状态弹窗 -->
+    <div id="serviceStatusModal" class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg flex items-center gap-2">
+                <i data-lucide="activity" class="h-5 w-5"></i>
+                服务状态
+            </h3>
+            <div id="serviceStatusContent" class="py-4">
+                <div class="flex items-center justify-center">
+                    <span class="loading loading-spinner loading-md"></span>
+                    <span class="ml-2">正在检查服务状态...</span>
+                </div>
+            </div>
+            <div class="modal-action">
+                <button id="closeServiceStatusModal" class="btn btn-primary">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center text-sm text-base-content/60 mb-4">
+        <p class="flex items-center justify-center gap-1">
+            <i data-lucide="external-link" class="h-4 w-4"></i>
+            <a href="https:/jk.sb/" target="_blank" class="hover:text-primary transition-colors">hammer</a>
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
