@@ -46,10 +46,7 @@ const getGraphToken = async () => {
     console.log('访问令牌获取成功');
     return token;
 };
-// 1. GET / 返回前端页面
-router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../public/index.html'));
-});
+
 
 /**
  * 获取邮箱完整信息（合并账户状态、订阅信息和OneDrive使用情况）
