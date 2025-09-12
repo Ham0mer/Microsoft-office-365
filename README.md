@@ -247,13 +247,13 @@ npm install
 npm start
 ```
 
-服务将在端口3000上运行。
+服务将在端口34343上运行。
 
 ## 环境变量
 
 可以通过环境变量配置：
 
-- `PORT`: 服务端口（默认3000）
+- `PORT`: 服务端口（默认34343）
 - `ALLOWED_ORIGINS`: 允许的CORS源（逗号分隔）
 - `NODE_ENV`: 环境模式（production/development）
 
