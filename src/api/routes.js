@@ -191,9 +191,9 @@ router.get('/health', (req, res) => {
         uptime: uptimeFormatted,
         uptimeSeconds: Math.floor(uptime),
         responseTime: `${responseTime}ms`,
-        port: process.env.PORT || 3000,
+        port: process.env.PORT || 34343,
         environment: process.env.NODE_ENV || 'development',
-        version: '1.0.0',
+        version: '1.1.1',
         memory: memoryUsageFormatted,
         nodeVersion: process.version,
         platform: process.platform
