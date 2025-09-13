@@ -96,6 +96,54 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 
+    // 获取服务计划的具体名称
+    function getServicePlanDisplayName(servicePlanName) {
+        // 从 core.json 中获取服务计划的中文名称
+        const servicePlanNames = {
+            "O365_BUSINESS_ESSENTIALS": "Microsoft 365 商业基础版（包含邮箱、Teams、SharePoint 等核心云服务）",
+            "INSIGHTS_BY_MYANALYTICS": "MyAnalytics Insights（个人工作模式洞察）",
+            "MICROSOFT_MYANALYTICS_FULL": "MyAnalytics 完整版",
+            "PEOPLE_SKILLS_FOUNDATION": "Viva Skills（技能管理基础功能）",
+            "PLACES_CORE": "Microsoft Places 核心功能（混合办公与空间管理：工位/会议室预订、到岗计划、空间利用分析）",
+            "GRAPH_CONNECTORS_SEARCH_INDEX": "Microsoft Graph 连接器搜索索引（将外部数据源接入 Microsoft Search）",
+            "Bing_Chat_Enterprise": "企业版必应聊天（带数据保护的 Copilot 聊天）",
+            "MESH_IMMERSIVE_FOR_TEAMS": "Microsoft Mesh 沉浸式会议（Teams 中的 3D/VR 协作）",
+            "MESH_AVATARS_ADDITIONAL_FOR_TEAMS": "Teams Mesh 额外头像功能",
+            "MESH_AVATARS_FOR_TEAMS": "Teams Mesh 头像功能",
+            "M365_LIGHTHOUSE_CUSTOMER_PLAN1": "Microsoft 365 Lighthouse（面向 MSP 的多租户管理）",
+            "VIVAENGAGE_CORE": "Viva Engage 核心功能（企业社交平台，前身 Yammer）",
+            "MICROSOFTBOOKINGS": "Microsoft Bookings（预约与排班工具）",
+            "RMS_S_BASIC": "Azure Rights Management 基础版（信息保护）",
+            "VIVA_LEARNING_SEEDED": "Viva Learning（学习平台基础功能）",
+            "Nucleus": "Microsoft Loop 核心组件（协作内容块）",
+            "POWER_VIRTUAL_AGENTS_O365_P1": "Power Virtual Agents（聊天机器人）",
+            "CDS_O365_P1": "Dataverse（原 Common Data Service）",
+            "PROJECT_O365_P1": "Project for Office 365（项目管理）",
+            "DYN365_CDS_O365_P1": "Dynamics 365 与 Dataverse 集成",
+            "MICROSOFT_SEARCH": "Microsoft Search（统一搜索）",
+            "WHITEBOARD_PLAN1": "Microsoft Whiteboard（白板协作）",
+            "MYANALYTICS_P2": "MyAnalytics 高级版",
+            "KAIZALA_O365_P2": "Microsoft Kaizala（移动群组通讯，已并入 Teams）",
+            "STREAM_O365_SMB": "Microsoft Stream（视频服务）",
+            "OFFICEMOBILE_SUBSCRIPTION": "Office Mobile（移动版 Office 应用订阅）",
+            "BPOS_S_TODO_1": "Microsoft To Do（任务管理）",
+            "FORMS_PLAN_E1": "Microsoft Forms（表单与问卷）",
+            "FLOW_O365_P1": "Power Automate（流程自动化）",
+            "POWERAPPS_O365_P1": "Power Apps（低代码应用开发）",
+            "TEAMS1": "Microsoft Teams",
+            "PROJECTWORKMANAGEMENT": "Planner（项目/任务管理）",
+            "SWAY": "Microsoft Sway（在线演示文稿）",
+            "INTUNE_O365": "Microsoft Intune（设备与应用管理）",
+            "SHAREPOINTWAC": "Office for the Web（网页版 Word/Excel/PowerPoint）",
+            "YAMMER_ENTERPRISE": "Yammer 企业版（现 Viva Engage）",
+            "EXCHANGE_S_STANDARD": "Exchange Online（企业邮箱）",
+            "MCOSTANDARD": "Microsoft Teams（核心通话/会议功能）",
+            "SHAREPOINTSTANDARD": "SharePoint Online（团队站点与文档管理）"
+        };
+        
+        return servicePlanNames[servicePlanName] || servicePlanName;
+    }
+
     // 邮箱信息查询（使用合并接口）
     document.getElementById('emailForm').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -205,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         </div>
                                         <div class="break-all">
                                             <strong>部件号:</strong> 
-                                            <span class="font-mono text-xs bg-base-100 px-2 py-1 rounded">${subscription.skuPartNumber}</span>
+                                            <span class="font-mono text-xs bg-base-100 px-2 py-1 rounded">${getServicePlanDisplayName(subscription.skuPartNumber)}</span>
                                         </div>
                                     </div>
                                     <div class="mt-2">
@@ -215,11 +263,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         subscription.servicePlans.forEach(plan => {
                             const statusClass = plan.provisioningStatus === 'Success' ? 'badge-success' : 'badge-error';
+                            const displayName = getServicePlanDisplayName(plan.servicePlanName);
                             content += `
                                 <div class="bg-base-100 p-2 rounded service-plan-item">
                                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                                         <div class="flex-1 min-w-0">
-                                            <span class="text-sm break-words leading-relaxed">${plan.servicePlanName}</span>
+                                            <div class="text-sm break-words leading-relaxed">
+                                                <div class="font-medium">${displayName}</div>
+                                                <div class="text-xs text-base-content/60 mt-1">${plan.servicePlanName}</div>
+                                            </div>
                                         </div>
                                         <div class="flex-shrink-0">
                                             <div class="badge ${statusClass} text-xs">${plan.provisioningStatus}</div>
