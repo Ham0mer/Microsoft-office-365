@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 显示加载提示
     function showLoading() {
         const loadingToast = document.createElement('div');
-        loadingToast.className = 'toast toast-top toast-center';
+        loadingToast.className = 'toast toast-end';
         loadingToast.innerHTML = `
             <div class="alert alert-info">
                 <i data-lucide="loader-2" class="h-6 w-6 animate-spin"></i>
@@ -214,9 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <span>已使用: ${usage.usedFormatted}</span>
                                             <span>总容量: ${usage.totalFormatted}</span>
                                         </div>
-                                        <div class="w-full bg-base-300 rounded-full h-2">
-                                            <div class="h-2 rounded-full ${progressColor}" style="width: ${progressWidth}%"></div>
-                                        </div>
+                                        <progress class="progress progress-secondary w-full" value="${progressWidth}" max="100"></progress>
                                         <div class="flex justify-between text-xs text-base-content/70">
                                             <span>使用率: ${usage.usedPercentage}%</span>
                                             <span>剩余: ${usage.remainingFormatted}</span>
@@ -485,9 +483,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <span>总已使用: ${summary.totalUsedFormatted}</span>
                                         <span>总容量: ${summary.totalCapacityFormatted}</span>
                                     </div>
-                                    <div class="w-full bg-base-300 rounded-full h-3 mb-2">
-                                        <div class="h-3 rounded-full bg-primary" style="width: ${(summary.totalUsed / summary.totalCapacity * 100).toFixed(2)}%"></div>
-                                    </div>
+                                    <progress class="progress progress-warning w-full h-3 mb-2" value="${(summary.totalUsed / summary.totalCapacity * 100).toFixed(2)}" max="100"></progress>
                                     <div class="flex justify-between text-xs text-base-content/70">
                                         <span>总剩余: ${summary.totalRemainingFormatted}</span>
                                         <span>总回收站: ${summary.totalDeletedFormatted}</span>
@@ -532,9 +528,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <span>已使用: ${usage.usedFormatted}</span>
                                         <span>总容量: ${usage.totalFormatted}</span>
                                     </div>
-                                    <div class="w-full bg-base-300 rounded-full h-1.5">
-                                        <div class="h-1.5 rounded-full ${progressColor}" style="width: ${progressWidth}%"></div>
-                                    </div>
+                                    <progress class="progress progress-accent w-full h-1.5" value="${progressWidth}" max="100"></progress>
                                     <div class="flex justify-between text-xs text-base-content/60 mt-1">
                                         <span>剩余: ${usage.remainingFormatted}</span>
                                         <span>回收站: ${usage.deletedFormatted}</span>
