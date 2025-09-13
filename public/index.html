@@ -85,12 +85,14 @@
             <form id="emailForm" class="space-y-4">
                 <div class="form-control">
                     <label class="label font-medium">邮箱地址</label>
-                    <input type="email" name="email" class="input input-bordered w-full" required placeholder="请输入要查询的邮箱地址">
+                    <div class="flex gap-2">
+                        <input type="email" name="email" class="input input-bordered w-full" required placeholder="请输入要查询的邮箱地址">
+                        <button type="submit" class="btn btn-primary ">
+                            <i data-lucide="search" class="w-5 h-5"></i> 查询邮箱信息
+                        </button>
+                    </div>
+                    
                 </div>
-
-                <button type="submit" class="btn btn-primary w-full flex gap-2 items-center">
-                    <i data-lucide="search" class="w-5 h-5"></i> 查询邮箱信息
-                </button>
             </form>
 
             <div id="emailResult" class="hidden mt-4"></div>
@@ -168,7 +170,7 @@
     <footer class="text-center text-sm text-base-content/60 mb-4">
         <p class="flex items-center justify-center gap-1">
             <i data-lucide="external-link" class="h-4 w-4"></i>
-            <a href="https:/jk.sb/" target="_blank" class="hover:text-primary transition-colors">hammer</a>
+            <a href="https:/jk.sb" target="_blank" class="hover:text-primary transition-colors">hammer</a>
         </p>
     </footer>
 
