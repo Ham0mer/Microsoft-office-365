@@ -118,22 +118,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 content = `
                     <div class="card bg-base-100 shadow-md">
-                        <div class="card-body">
-                            <h2 class="card-title text-primary flex items-center gap-2">
-                                <i data-lucide="check-circle" class="h-6 w-6"></i>
-                                ${data.msg}
+                        <div class="card-body p-4 sm:p-6">
+                            <h2 class="card-title text-primary flex items-center gap-2 text-lg sm:text-xl">
+                                <i data-lucide="check-circle" class="h-5 w-5 sm:h-6 sm:w-6"></i>
+                                <span class="break-words">${data.msg}</span>
                             </h2>
                             
                             <!-- 账户基本信息 -->
                             <div class="space-y-4 mt-4">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h3 class="font-bold text-lg">${data.data.userPrincipalName || email}</h3>
-                                        <p class="text-sm opacity-70">${data.data.displayName || '无显示名称'}</p>
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                    <div class="flex-1 min-w-0">
+                                        <h3 class="font-bold text-base sm:text-lg break-words">${data.data.userPrincipalName || email}</h3>
+                                        <p class="text-sm opacity-70 break-words">${data.data.displayName || '无显示名称'}</p>
                                     </div>
-                                    <div class="badge ${statusClass} gap-2">
-                                        <i data-lucide="${statusIcon}" class="h-4 w-4"></i>
-                                        ${statusText}
+                                    <div class="flex-shrink-0">
+                                        <div class="badge ${statusClass} gap-2 text-xs sm:text-sm">
+                                            <i data-lucide="${statusIcon}" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                            ${statusText}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -196,9 +198,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="card bg-base-200">
                                 <div class="card-body">
                                     <h4 class="font-bold">订阅 ${index + 1}</h4>
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                                        <div><strong>SKU ID:</strong> ${subscription.skuId}</div>
-                                        <div><strong>部件号:</strong> ${subscription.skuPartNumber}</div>
+                                    <div class="space-y-2 text-sm">
+                                        <div class="break-all">
+                                            <strong>SKU ID:</strong> 
+                                            <span class="font-mono text-xs bg-base-100 px-2 py-1 rounded">${subscription.skuId}</span>
+                                        </div>
+                                        <div class="break-all">
+                                            <strong>部件号:</strong> 
+                                            <span class="font-mono text-xs bg-base-100 px-2 py-1 rounded">${subscription.skuPartNumber}</span>
+                                        </div>
                                     </div>
                                     <div class="mt-2">
                                         <strong>服务计划:</strong>
@@ -208,9 +216,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         subscription.servicePlans.forEach(plan => {
                             const statusClass = plan.provisioningStatus === 'Success' ? 'badge-success' : 'badge-error';
                             content += `
-                                <div class="flex items-center justify-between bg-base-100 p-2 rounded">
-                                    <span>${plan.servicePlanName}</span>
-                                    <div class="badge ${statusClass}">${plan.provisioningStatus}</div>
+                                <div class="bg-base-100 p-2 rounded service-plan-item">
+                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                        <div class="flex-1 min-w-0">
+                                            <span class="text-sm break-words leading-relaxed">${plan.servicePlanName}</span>
+                                        </div>
+                                        <div class="flex-shrink-0">
+                                            <div class="badge ${statusClass} text-xs">${plan.provisioningStatus}</div>
+                                        </div>
+                                    </div>
                                 </div>
                             `;
                         });

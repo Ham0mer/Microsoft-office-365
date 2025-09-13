@@ -25,6 +25,32 @@
             background: linear-gradient(135deg, #e0f2fe 0%, #bef264 100%);
             min-height: 100vh;
         }
+        
+        /* 移动端优化 */
+        @media (max-width: 640px) {
+            .glass-card {
+                margin: 0.5rem;
+                padding: 1rem;
+                border-radius: 0.75rem;
+            }
+            
+            /* 确保长文本能够正确换行 */
+            .break-words {
+                word-break: break-word;
+                overflow-wrap: break-word;
+            }
+            
+            /* 优化卡片间距 */
+            .card-body {
+                padding: 1rem;
+            }
+            
+            /* 优化服务计划显示 */
+            .service-plan-item {
+                word-break: break-word;
+                line-height: 1.4;
+            }
+        }
     </style>
 </head>
 <body class="flex flex-col items-center justify-center p-4">
