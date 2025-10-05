@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 
 const apiRoutes = require('./src/api/routes');
+const steamRoutes = require('./src/api/steam/routes');
 
 const app = express();
 const PORT = process.env.PORT || 34343;
@@ -16,6 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // API路由
 app.use('/api', apiRoutes);
+//steam api 路由
+app.use('/steam', steamRoutes);
 
 // 404处理
 app.use((req, res) => {
