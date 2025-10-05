@@ -1,13 +1,19 @@
 require('dotenv').config({ path: './env' });
+
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 
 const apiRoutes = require('./src/api/routes');
 const steamRoutes = require('./src/api/steam/routes');
 
 const app = express();
 const PORT = process.env.PORT || 34343;
-
+app.use(cors({
+    origin: '*',  // 或指定 ['http://localhost:4321', 'https://qwq.gs']
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.static(path.join(__dirname, "public")));
 
 // 请求体解析
