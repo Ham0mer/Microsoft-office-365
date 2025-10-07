@@ -1,6 +1,6 @@
-import { load } from 'cheerio'
+const { load } = require('cheerio')
 
-export function crawler(html) {
+function crawler(html) {
   const $ = load(html)
 
   let gameCount = '0'
@@ -80,3 +80,5 @@ export function crawler(html) {
     profileAvatarFrameUrl,
   }
 }
+
+module.exports = { crawler };
