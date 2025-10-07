@@ -9,6 +9,19 @@ async function getPlayerSummaries(apiKey, steamIds) {
   return data.response.players;
 }
 
+//https://steamcommunity.com/profiles/${steamid}/ 模拟浏览器访问获取html
+async function getSteamProfileHtml(steamid) {
+  const url = `https://steamcommunity.com/profiles/${steamid}/`;
+  const { data } = await axios.get(url, {
+    headers: {
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36',
+    },
+  });
+  return data;
+}
+
+
 async function getOwnedGames(apiKey, steamid) {
   const url = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v1/';
   const { data } = await axios.get(url, {
@@ -64,4 +77,4 @@ async function imageUrl2Base64(id) {
 }
 
 
-module.exports = { getPlayerSummaries, getOwnedGames, GetRecentlyPlayedGames, imageUrl2Base64, GetPlayerAchievements };  
+module.exports = { getPlayerSummaries, getSteamProfileHtml, getOwnedGames, GetRecentlyPlayedGames, imageUrl2Base64, GetPlayerAchievements };  

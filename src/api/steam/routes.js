@@ -3,13 +3,27 @@ const express = require('express');
 const config = require('../../core/config');
 const utils = require('../../core/utils');
 const steamApi = require('../../core/steamApi');
+const crawler = require('../../core/crawler');
 const router = express.Router();
 
 router.get('/profile/:steamid', async (req, res) => {
     const { steamid } = req.params;
     const result = await steamApi.getPlayerSummaries(config.steam_api_key, steamid);
+    const profilhtml =await steamApi.getSteamProfileHtml(steamid);
+    const info = crawler.crawler(profilhtml);
+    result[0].info = info;
     res.json(utils.response(0, '获取玩家信息成功', result));
 });
+
+//获取玩家游戏库html
+router.get('/profilehtml/:steamid', async (req, res) => {
+    const { steamid } = req.params;
+    const result = await steamApi.getSteamProfileHtml(steamid);
+    const gameInfo = crawler.crawler(result);
+    res.json(utils.response(0, '获取玩家游戏库html成功', gameInfo));    
+});
+
+
 
 router.get('/games/:steamid', async (req, res) => {
     const { steamid } = req.params;
