@@ -1,16 +1,10 @@
-# 使用官方Node.js运行时作为基础镜像
-FROM node:18-alpine
+FROM node:22-alpine
 
-# 设置工作目录
 WORKDIR /app
 
-# 复制package.json和package-lock.json（如果存在）
+# 复制package.json和package-lock.json
 COPY package*.json ./
 
-# 设置npm配置以提高稳定性
-RUN npm config set registry https://registry.npmmirror.com \
-    && npm config set fetch-retry-mintimeout 20000 \
-    && npm config set fetch-retry-maxtimeout 120000
 
 # 安装依赖
 RUN npm ci --only=production && npm cache clean --force
